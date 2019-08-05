@@ -1,6 +1,6 @@
 ﻿#requires -version 5.1
 #requires -RunAsAdministrator
-#equires -Modules Az
+#requires -Modules Az
 
 <#
 .SYNOPSIS
