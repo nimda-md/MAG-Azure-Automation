@@ -1,0 +1,1 @@
+# MAG-Azure-Automation
