@@ -156,7 +156,7 @@ $parameters.Add("studentRandomInfix", $studentRandomInfix)
 
 $rgDeployment = 'azuredeploy-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')
 New-AzResourceGroupDeployment -ResourceGroupName $rg `
--TemplateFile $templateUri `
+-TemplateUri $templateUri `
 -Name $rgDeployment `
 -TemplateParameterObject $parameters `
 -Force -Verbose `
