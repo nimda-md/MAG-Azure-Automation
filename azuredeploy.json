@@ -7,7 +7,7 @@
       "metadata": {
         "description": "Auto-generated container in staging storage account to receive DSC scripts. Use public githubusercontent location."
       },
-      "defaultValue": "https://raw.githubusercontent.com/autocloudarc/0026-azure-automation-plus-dsc-lab/master/"
+      "defaultValue": "https://raw.githubusercontent.com/nimda-md/MAG-Azure-Automation/master/"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring",
@@ -47,9 +47,9 @@
     "azureEnvironment": {
       "type": "string",
       "metadata": {
-        "description": "The AzureCloud (Public cloud) environment will be used."
+        "description": "The AzureUSGovernment (Gov Cloud) environment will be used."
       },
-      "defaultValue": "AzureCloud"
+      "defaultValue": "AzureUSGovernment"
     },
     "studentNumber": {
       "defaultValue": 0,
@@ -89,9 +89,10 @@
         "Japan East",
         "Southeast Asia",
         "UK South",
-        "West Europe"
+        "West Europe",
+        "USGovVirginia"
       ],
-      "defaultValue": "East US",
+      "defaultValue": "USGovVirginia",
       "metadata": {
         "description": "Log Analytics (OMS) region."
       }
@@ -102,14 +103,14 @@
     "saName": "[variables('randomInfix')]",
     "saKind": "Storage",
     "saSku": "Standard_LRS",
-    "saUrlSuffix": ".blob.core.windows.net",
+    "saUrlSuffix": ".blob.core.usgovcloudapi.net/",
     "diagStorageUri": "[concat('https://',variables('saName'),variables('saUrlSuffix'))]",
     "createStorageAccountUri": "[uri(parameters('_artifactsLocation'),concat('nested/01.11.00.createStorageAccount.json',parameters('_artifactsLocationSasToken')))]",
     "createPublicIPUri": "[uri(parameters('_artifactsLocation'),concat('nested/04.36.00.createPublicIP.json',parameters('_artifactsLocationSasToken')))]",
     "devPublicIPAddressName": "[toLower(concat(variables('devPrefix'),'1-pip'))]",
     "devDomainNameLabelPrefix": "[concat(variables('devPublicIPAddressName'),parameters('studentRandomInfix'))]",
     "devPublicIPAddressType": "Static",
-    "fqdnAzureSuffix": ".cloudapp.azure.com",
+    "fqdnAzureSuffix": ".usgovvirginia.cloudapp.usgovcloudapi.net",
     "fqdnLocationSuffix": "[concat(variables('devPublicIPAddressName'),'.',parameters('location'),variables('fqdnAzureSuffix'))]",
     "avSetPrefix": "AvSet",
     "avSet": [
@@ -256,7 +257,7 @@
       "comments": "04.36.00.createPublicIP",
       "name": "04.36.00.linkedDeploymentCreatePublicIP",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "properties": {
         "templateLink": {
           "uri": "[variables('createPublicIPUri')]",
@@ -286,7 +287,7 @@
       "comments": "05.08.00.createAvSet",
       "name": "05.08.00.linkedDeploymentCreateAvSet",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "properties": {
         "templateLink": {
           "uri": "[variables('createAvSetUri')]",
@@ -310,7 +311,7 @@
       "comments": "06.06.00.createNSG",
       "name": "06.06.00.linkedDeploymentCreateNSG",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "properties": {
         "templateLink": {
           "uri": "[variables('createNSGUri')]",
@@ -337,7 +338,7 @@
       "comments": "07.03.00.createVnet",
       "name": "07.03.00.linkedDeploymentCreateVnet",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "06.06.00.linkedDeploymentCreateNSG"
       ],
@@ -376,7 +377,7 @@
       "comments": "09.12.00.createAutoAcct",
       "name": "09.12.00.linkedDeploymentCreateAutoAcct",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "22016-09-01",
       "dependsOn": [],
       "properties": {
         "templateLink": {
@@ -401,7 +402,7 @@
       "comments": "10.13.00.createOmsWorkspace",
       "name": "10.13.00.linkedDeploymentCreateOmsWorkspace",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [],
       "properties": {
         "templateLink": {
@@ -426,7 +427,7 @@
       "comments": "11.14.00.createRecoveryServicesVault",
       "name": "11.14.00.linkedDeploymentCreateRecoveryServicesVault",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [],
       "properties": {
         "templateLink": {
@@ -451,7 +452,7 @@
       "comments": "11.14.01.createNetworkInterfaces",
       "name": "11.14.01.linkedDeploymentCreateNetworkInterfaces",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "04.36.00.linkedDeploymentCreatePublicIP",
         "07.03.00.linkedDeploymentCreateVnet"
@@ -491,7 +492,7 @@
       "comments": "03.15.00.createDomainController",
       "name": "03.15.00.linkedDeploymentCreateDomainController",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "01.11.00.linkedDeploymentCreateStorageAccount",
         "05.08.00.linkedDeploymentCreateAvSet",
@@ -548,7 +549,7 @@
       "comments": "03.16.00.updateVnetWithDNS",
       "name": "03.16.00.linkedDeploymentUpdateVnetWithDNS",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "03.15.00.linkedDeploymentCreateDomainController"
       ],
@@ -581,7 +582,7 @@
       "comments": "14.17.00.createDevServer",
       "name": "14.17.00.linkedDeploymentCreateDevServer",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "01.11.00.linkedDeploymentCreateStorageAccount",
         "03.16.00.linkedDeploymentUpdateVnetWithDNS"
@@ -633,7 +634,7 @@
       "comments": "15.21.00.createWebServers",
       "name": "15.21.00.linkedDeploymentCreateWebServers",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "01.11.00.linkedDeploymentCreateStorageAccount",
         "03.16.00.linkedDeploymentUpdateVnetWithDNS"
@@ -685,7 +686,7 @@
       "comments": "16.23.00.createSqlServers",
       "name": "16.23.00.linkedDeploymentCreateSqlServers",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "01.11.00.linkedDeploymentCreateStorageAccount",
         "03.16.00.linkedDeploymentUpdateVnetWithDNS"
@@ -737,7 +738,7 @@
       "comments": "17.25.00.createAdsServers",
       "name": "17.25.00.linkedDeploymentCreateAdsServers",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "01.11.00.linkedDeploymentCreateStorageAccount",
         "03.16.00.linkedDeploymentUpdateVnetWithDNS"
@@ -789,7 +790,7 @@
       "comments": "18.26.01.createLnxServer",
       "name": "18.26.01.linkedDeploymentCreateLnxServer",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2016-09-01",
       "dependsOn": [
         "01.11.00.linkedDeploymentCreateStorageAccount",
         "03.16.00.linkedDeploymentUpdateVnetWithDNS"

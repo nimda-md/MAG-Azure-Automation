@@ -136,7 +136,7 @@ Until ($region -in $regions)
 
 New-AzResourceGroup -Name $rg -Location $region -Verbose
 
-$templateUri = 'https://raw.githubusercontent.com/autocloudarc/0026-azure-automation-plus-dsc-lab/master/azuredeploy.json'
+$templateUri = 'https://raw.githubusercontent.com/nimda-md/MAG-Azure-Automation/master/azuredeploy.json'
 $adminUserName = "adm.infra.user"
 $adminCred = Get-Credential -UserName $adminUserName -Message "Enter password for user: $adminUserName"
 $adminPassword = $adminCred.GetNetworkCredential().password
@@ -146,7 +146,7 @@ Do
 {
     $studentRandomInfix = (New-Guid).Guid.Replace("-","").Substring(0,8)
 } #end while
-While (-not((Get-AzureRMStorageAccountNameAvailability -Name $studentRandomInfix).NameAvailable))
+While (-not((Get-AzStorageAccountNameAvailability -Name $studentRandomInfix).NameAvailable))
 
 $parameters = @{}
 $parameters.Add("studentNumber", $studentNumber)
@@ -168,7 +168,7 @@ if ($ErrorMessages)
 else
 {
     $jumpDevMachine = "AZRDEV" + $studentNumber + "01"
-    $fqdnDev = (Get-AzureRMPublicIpAddress -ResourceGroupName $rg | Where-Object { $_.Name -like 'azrdev*pip*'}).DnsSettings.fqdn
+    $fqdnDev = (Get-AzPublicIpAddress -ResourceGroupName $rg | Where-Object { $_.Name -like 'azrdev*pip*'}).DnsSettings.fqdn
 
     $StopTimer = Get-Date -Verbose
     Write-Output "Calculating elapsed time..." -Log $Log
