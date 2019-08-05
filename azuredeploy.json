@@ -377,7 +377,7 @@
       "comments": "09.12.00.createAutoAcct",
       "name": "09.12.00.linkedDeploymentCreateAutoAcct",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "22016-09-01",
+      "apiVersion": "2016-09-01",
       "dependsOn": [],
       "properties": {
         "templateLink": {
@@ -824,7 +824,7 @@
           },
           "diagStorageUri": {
             "value": "[variables('diagStorageUri')]"
-            },
+            }
         },
         "mode": "Incremental",
         "debugSetting": {

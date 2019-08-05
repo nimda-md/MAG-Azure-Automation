@@ -136,7 +136,7 @@ Until ($region -in $regions)
 
 New-AzResourceGroup -Name $rg -Location $region -Verbose
 
-$templateUri = 'https://raw.githubusercontent.com/nimda-md/MAG-Azure-Automation/master/azuredeploy.json'
+$templateUri = 'https://raw.githubusercontent.com/nimda-md/MAG-Azure-Automation/dev/azuredeploy.json'
 $adminUserName = "adm.infra.user"
 $adminCred = Get-Credential -UserName $adminUserName -Message "Enter password for user: $adminUserName"
 $adminPassword = $adminCred.GetNetworkCredential().password
