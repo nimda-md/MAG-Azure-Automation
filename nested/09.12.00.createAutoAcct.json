@@ -11,7 +11,7 @@
   },
   "variables": {
     "autoAcctSku": "Free",
-    "autoAcctLocation": "eastus2"
+    "autoAcctLocation": "usgovvirginia"
   },
   "resources": [
     {
